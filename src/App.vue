@@ -80,7 +80,6 @@ export default {
       this.dialogFormVisible = true
     },
     check (name, pwd) {
-      console.log(this.form)
       if (!name) {
         this.form.error.name = '请输入姓名'
         return false
@@ -98,19 +97,21 @@ export default {
       console.log($router)
       if (!this.check(name, pwd)) return
       if (name === 'root' && pwd === '278495617') {
-        alert('name:' + name + 'pwd:' + pwd)
-        this.$http.post('http://localhost:8080/blog-admin/login', {username: name, password: pwd}, {header: {'Origin': '*'}, emulateJSON: true})
+        this.$http.post('http://localhost:8080/blog-admin/login', {username: name, password: pwd}, {header: {'Origin': '*', 'Access-Control-Request-Headers': 'authorization'}, emulateJSON: true})
           .then(
             (response) => {
-              console.log(response.headers)
-              console.log(response)
+              const data = response.data.data
+              console.log(data)
+              console.log(data['Authorization'])
+              window.localStorage.setItem('Authorization', data['Authorization'])
+              console.log(window.localStorage.getItem('Authorization'))
+              this.dialogFormVisible = false
             },
             (error) => {
               alert(error)
               console.log(error)
             }
           )
-        this.dialogFormVisible = false
         $router.push('/hello')
       } else {
         alert('用户名密码错误')
