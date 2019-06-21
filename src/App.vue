@@ -97,7 +97,7 @@ export default {
       console.log($router)
       if (!this.check(name, pwd)) return
       if (name === 'root' && pwd === '278495617') {
-        this.$http.post('http://localhost:8080/blog-admin/login', {username: name, password: pwd}, {header: {'Origin': '*', 'Access-Control-Request-Headers': 'authorization'}, emulateJSON: true})
+        this.$http.post('http://localhost:8080/blog_web/login', {username: name, password: pwd}, {header: {'Origin': '*', 'Access-Control-Request-Headers': 'authorization'}, emulateJSON: true})
           .then(
             (response) => {
               const data = response.data.data
