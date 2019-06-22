@@ -94,10 +94,11 @@ export default {
       const name = this.form.name
       const pwd = this.form.pwd
       const $router = this.$router
+      const baseUrl = 'http://localhost:8088'
       console.log($router)
       if (!this.check(name, pwd)) return
       if (name === 'root' && pwd === '278495617') {
-        this.$http.post('/blog-web/login', {username: name, password: pwd}, {header: {'Origin': '*', 'Access-Control-Request-Headers': 'authorization'}, emulateJSON: true})
+        this.$http.post(baseUrl + '/blog-web/login', {username: name, password: pwd}, {header: {'Origin': '*', 'Access-Control-Request-Headers': 'authorization'}, emulateJSON: true})
           .then(
             (response) => {
               const data = response.data.data
@@ -106,13 +107,13 @@ export default {
               window.localStorage.setItem('Authorization', data['Authorization'])
               console.log(window.localStorage.getItem('Authorization'))
               this.dialogFormVisible = false
+              $router.push('/hello')
             },
             (error) => {
               alert(error)
               console.log(error)
             }
           )
-        $router.push('/hello')
       } else {
         alert('用户名密码错误')
       }
